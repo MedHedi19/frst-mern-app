@@ -1,6 +1,6 @@
-import { create } from 'zustand';
 import axios from 'axios';
 import { enqueueSnackbar } from 'notistack';
+import { create } from 'zustand';
 
 
 
@@ -54,20 +54,20 @@ const authStore = create((set) => ({
         }
     },
 
-    login: async () => {
+    // login: async () => {
 
-        try {
-            const { loginForm } = authStore.getState();
-            const res = await axios.post("http://localhost:3000/login", loginForm, {
-                withCredentials: true,
-            });
-            set({ loggedIn: true });
-            return res;
-        } catch (err) {
-            enqueueSnackbar(err.message, { variant: "error" });
-            return;
-        }
-    },
+    //     try {
+    //         const { loginForm } = authStore.getState();
+    //         const res = await axios.post("http://localhost:3000/login", loginForm, {
+    //             withCredentials: true,
+    //         });
+    //         set({ loggedIn: true });
+    //         return res;
+    //     } catch (err) {
+    //         enqueueSnackbar(err.message, { variant: "error" });
+    //         return;
+    //     }
+    // },
 
     checkAuth: async () => {
         try {
@@ -79,20 +79,20 @@ const authStore = create((set) => ({
         }
     },
 
-    signup: async () => {
+    // signup: async () => {
 
-        try {
-            const { signupForm } = authStore.getState();
-            const res = await axios.post("http://localhost:3000/signup", signupForm, {
-                withCredentials: true,
-            });
-            return res;
-        } catch (err) {
-            console.log(err);
-            enqueueSnackbar(err.message, { variant: "error" });
-            return;
-        }
-    },
+    //     try {
+    //         const { signupForm } = authStore.getState();
+    //         const res = await axios.post("http://localhost:3000/signup", signupForm, {
+    //             withCredentials: true,
+    //         });
+    //         return res;
+    //     } catch (err) {
+    //         console.log(err);
+    //         enqueueSnackbar(err.message, { variant: "error" });
+    //         return;
+    //     }
+    // },
     logout: async () => {
         try {
             await axios.get("http://localhost:3000/logout")

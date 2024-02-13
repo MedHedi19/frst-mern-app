@@ -1,8 +1,8 @@
 import { SnackbarProvider } from 'notistack';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import RequireAuth from './components/RequireAuth';
 import AddNotes from './pages/AddNotes';
 import DeleteNotes from './pages/DeleteNotes';
 import EditNotes from './pages/EditNotes';
@@ -18,22 +18,29 @@ import SignupPage from './pages/SignupPage';
 
 
 function App() {
+  const user = useSelector(state => state.auth.isAuthenticated);
   return (
     <div className="App">
       <SnackbarProvider>
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/ShowNotes' element={<RequireAuth><ShowNotes /></RequireAuth>} />
-          <Route path='/AddNotes' element={<RequireAuth><AddNotes /></RequireAuth>} />
-          <Route path="/DeleteNotes/:id" element={<RequireAuth><DeleteNotes /></RequireAuth>} />
-          <Route path="/EditNotes/:id" element={<RequireAuth><EditNotes /></RequireAuth>} />
-          <Route path="/NotesDetails/:id" element={<RequireAuth><NotesDetails /></RequireAuth>} />
-          <Route path="/ForbidenPage" element={<ForbidenPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/logout" element={<LogoutPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-
+          {user ? (
+            <>
+              <Route path='/ShowNotes' element={<ShowNotes />} />
+              <Route path='/AddNotes' element={<AddNotes />} />
+              <Route path="/DeleteNotes/:id" element={<DeleteNotes />} />
+              <Route path="/EditNotes/:id" element={<EditNotes />} />
+              <Route path="/NotesDetails/:id" element={<NotesDetails />} />
+              <Route path="/ForbidenPage" element={<ForbidenPage />} />
+              <Route path='/' element={<Home />} />
+            </>
+          ) : (
+            <>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/logout" element={<LogoutPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </>
+          )}
         </Routes>
       </SnackbarProvider>
     </div>
